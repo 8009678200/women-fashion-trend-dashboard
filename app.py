@@ -16,18 +16,16 @@ page = st.sidebar.selectbox(
 )
 
 if page == "Home":
-    import streamlit as st
-
-st.title("Home Page")
-
-st.write("Welcome to Women's Fashion Dashboard")
-
+    st.title("Home Page")
+    st.write("Welcome to Women's Fashion Dashboard")
 
 st.title("Women's Fashion Trends Dashboard")
+
 
 @st.cache_data
 def load_data(file):
     return pd.read_csv(file)
+
 
 uploaded_file = st.file_uploader(
     "Upload CSV File",
@@ -35,7 +33,6 @@ uploaded_file = st.file_uploader(
 )
 
 if uploaded_file:
-
     df = load_data(uploaded_file)
 
     st.success("Dataset Loaded")
@@ -50,27 +47,24 @@ if uploaded_file:
                 na=False
             )
         ]
-sort_col = st.selectbox(
-    "Sort By",
-    df.columns
-)
 
-df = df.sort_values(sort_col)
-st.dataframe(df)
-st.dataframe(df)
+    if "title" in df.columns:
+        sort_col = st.selectbox("Sort By", df.columns)
+        df = df.sort_values(sort_col)
+    else:
+        st.warning("The uploaded CSV does not contain a 'title' column.")
+        st.stop()
 
-    # Numeric columns select karo
- numeric_cols = df.select_dtypes(include="number").columns
+    st.dataframe(df)
+
+    numeric_cols = df.select_dtypes(include="number").columns
 
     if len(numeric_cols) > 0:
-
-        # Dropdown Widget
         selected_col = st.selectbox(
             "Select Numeric Column",
             numeric_cols
         )
 
-        # Slider Widget
         min_val = float(df[selected_col].min())
         max_val = float(df[selected_col].max())
 
@@ -81,7 +75,6 @@ st.dataframe(df)
             (min_val, max_val)
         )
 
-        # Filter Data
         filtered_df = df[
             (df[selected_col] >= selected_range[0]) &
             (df[selected_col] <= selected_range[1])
@@ -90,7 +83,6 @@ st.dataframe(df)
         st.subheader("Filtered Dataset")
         st.dataframe(filtered_df)
 
-        # Plotly Visualization
         fig = px.histogram(
             filtered_df,
             x=selected_col,
