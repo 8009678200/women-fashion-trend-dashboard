@@ -50,7 +50,12 @@ if uploaded_file:
                 na=False
             )
         ]
+sort_col = st.selectbox(
+    "Sort By",
+    df.columns
+)
 
+df = df.sort_values(sort_col)
     st.dataframe(df)
     st.dataframe(df)
 
