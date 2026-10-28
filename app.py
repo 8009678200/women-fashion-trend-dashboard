@@ -56,8 +56,8 @@ sort_col = st.selectbox(
 )
 
 df = df.sort_values(sort_col)
-    st.dataframe(df)
-    st.dataframe(df)
+st.dataframe(df)
+st.dataframe(df)
 
     # Numeric columns select karo
     numeric_cols = df.select_dtypes(include="number").columns
