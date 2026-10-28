@@ -1,3 +1,5 @@
+import pandas as pd
+import plotly.express as px
 
 import streamlit as st
 
@@ -14,24 +16,39 @@ page = st.sidebar.selectbox(
 )
 
 if page == "Home":
-    st.title("Women's Fashion Trends Dashboard")
+    import streamlit as st
 
-    col1, col2 = st.columns(2)
+st.title("Home Page")
 
-    with col1:
-        st.metric("Total Products", "15730")
+st.write("Welcome to Women's Fashion Dashboard")
 
-    with col2:
-        st.metric("Topics Identified", "7")
 
-elif page == "Sentiment Analysis":
-    st.title("Sentiment Analysis")
-    st.write("Positive vs Negative Keyword Analysis")
+st.title("Women's Fashion Trends Dashboard")
 
-elif page == "Topic Modeling":
-    st.title("Topic Modeling")
-    st.write("LDA Topic Modeling Results")
+@st.cache_data
+def load_data(file):
+    return pd.read_csv(file)
 
-elif page == "About":
-    st.title("About")
-    st.write("Brainy Beam Internship Project")
+uploaded_file = st.file_uploader(
+    "Upload CSV File",
+    type=["csv"]
+)
+
+if uploaded_file:
+
+    df = load_data(uploaded_file)
+
+    st.success("Dataset Loaded")
+
+    search = st.text_input("Search Product")
+
+    if search:
+        df = df[
+            df["title"].astype(str).str.contains(
+                search,
+                case=False,
+                na=False
+            )
+        ]
+
+    st.dataframe(df)
