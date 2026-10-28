@@ -60,7 +60,7 @@ st.dataframe(df)
 st.dataframe(df)
 
     # Numeric columns select karo
-    numeric_cols = df.select_dtypes(include="number").columns
+ numeric_cols = df.select_dtypes(include="number").columns
 
     if len(numeric_cols) > 0:
 
