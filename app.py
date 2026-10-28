@@ -52,3 +52,47 @@ if uploaded_file:
         ]
 
     st.dataframe(df)
+    st.dataframe(df)
+
+    # Numeric columns select karo
+    numeric_cols = df.select_dtypes(include="number").columns
+
+    if len(numeric_cols) > 0:
+
+        # Dropdown Widget
+        selected_col = st.selectbox(
+            "Select Numeric Column",
+            numeric_cols
+        )
+
+        # Slider Widget
+        min_val = float(df[selected_col].min())
+        max_val = float(df[selected_col].max())
+
+        selected_range = st.slider(
+            "Select Range",
+            min_val,
+            max_val,
+            (min_val, max_val)
+        )
+
+        # Filter Data
+        filtered_df = df[
+            (df[selected_col] >= selected_range[0]) &
+            (df[selected_col] <= selected_range[1])
+        ]
+
+        st.subheader("Filtered Dataset")
+        st.dataframe(filtered_df)
+
+        # Plotly Visualization
+        fig = px.histogram(
+            filtered_df,
+            x=selected_col,
+            title=f"{selected_col} Distribution"
+        )
+
+        st.plotly_chart(
+            fig,
+            use_container_width=True
+        )
