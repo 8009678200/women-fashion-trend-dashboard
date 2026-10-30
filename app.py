@@ -9,7 +9,7 @@ st.set_page_config(
 ) 
 # Dataset
 df = pd.read_csv(
-    "summer-products.csv"
+    "summer-products.csv.zip"
 )
 
 df['popular'] = np.where(
