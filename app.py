@@ -4,10 +4,34 @@ import numpy as np
 import streamlit as st
 
 st.set_page_config(
-    # Dataset
-
+  page_title="Women's Fashion Trends",
+    layout="wide"
+) 
+# Dataset
 df = pd.read_csv(
-    "/kaggle/input/datasets/durgeshrao9993/dataset/summer-products.csv"
+    "summer-products.csv"
+)
+
+df['popular'] = np.where(
+    df['units_sold'] > df['units_sold'].median(),
+    1,
+    0
+)
+
+features = [
+    'price',
+    'retail_price',
+    'rating',
+    'rating_count',
+    'uses_ad_boosts',
+    'merchant_rating'
+]
+
+X = df[features]
+y = df['popular']
+
+
+
 )
 
 df['popular'] = np.where(
