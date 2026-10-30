@@ -89,7 +89,7 @@ for name, model in models.items():
     trained_models[name] = model
     page_title="Women's Fashion Trends Dashboard",
     layout="wide"
-)
+
 
 st.title("Women's Fashion Trends Dashboard")
 
