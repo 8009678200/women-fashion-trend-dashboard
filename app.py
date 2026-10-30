@@ -32,7 +32,7 @@ y = df['popular']
 
 
 
-)
+
 
 df['popular'] = np.where(
     df['units_sold'] > df['units_sold'].median(),
