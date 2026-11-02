@@ -23,3 +23,32 @@ if uploaded_file is not None:
 
     st.subheader("Dataset Preview")
     st.dataframe(df.head())
+        col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric("Rows", df.shape[0])
+
+    with col2:
+        st.metric("Columns", df.shape[1])
+            st.subheader("Missing Values")
+
+    st.dataframe(
+        df.isnull().sum().reset_index()
+    )
+    st.subheader("Summary Statistics")
+
+    st.dataframe(
+        df.describe()
+    )
+    if "rating" in df.columns:
+
+        fig = px.histogram(
+            df,
+            x="rating",
+            title="Rating Distribution"
+        )
+
+        st.plotly_chart(
+            fig,
+            use_container_width=True
+        )
