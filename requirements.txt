@@ -2,7 +2,7 @@ streamlit
 pandas
 numpy
 plotly
+transformers
+torch
 scikit-learn
-xgboost
-shap
-
+joblib
