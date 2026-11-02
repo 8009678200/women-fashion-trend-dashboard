@@ -6,9 +6,7 @@ from transformers import pipeline
 # ==========================
 # Page Configuration
 # ==========================
-@st.cache_data
-def load_data(uploaded_file):
-    return pd.read_csv(uploaded_file)
+
 st.set_page_config(
     page_title="Women's Fashion Trends Dashboard",
     page_icon="👗",
@@ -45,9 +43,35 @@ if uploaded_file is not None:
 
     try:
 
-        df =pd.read_csv(uploaded_file)
+        df = pd.read_csv(uploaded_file)
 
         st.success("✅ File Uploaded Successfully")
+
+        # Dataset Preview
+        st.subheader("📊 Dataset Preview")
+        st.dataframe(df.head())
+
+        # Dataset Shape
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.metric("Rows", df.shape[0])
+
+        with col2:
+            st.metric("Columns", df.shape[1])
+
+        # Missing Values
+        st.subheader("📝 Missing Values")
+
+        missing_df = df.isnull().sum().reset_index()
+        missing_df.columns = ["Column", "Missing Values"]
+
+        st.dataframe(missing_df)
+
+        # Summary Statistics
+        st.subheader("📈 Summary Statistics")
+
+        st.dataframe(df.describe(include="all"))
 
     except Exception as e:
 
