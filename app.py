@@ -45,8 +45,7 @@ if uploaded_file is not None:
     try:
 
         # Read CSV
-        df = load_data(uploaded_file)
-
+       df = pd.read_csv(uploaded_file)
         st.success("✅ File Uploaded Successfully")
 
         # ==========================
