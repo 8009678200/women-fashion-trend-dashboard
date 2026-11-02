@@ -39,14 +39,18 @@ uploaded_file = st.file_uploader(
     "Choose a CSV file",
     type=["csv"]
 )
-
 if uploaded_file is not None:
 
     try:
 
-        # Read CSV
-       df = pd.read_csv(uploaded_file)
-    st.success("✅ File Uploaded Successfully")
+        df = load_data(uploaded_file)
+
+        st.success("✅ File Uploaded Successfully")
+
+    except Exception as e:
+
+        st.error(f"Error: {e}")
+
 
         # ==========================
         # Dataset Preview
