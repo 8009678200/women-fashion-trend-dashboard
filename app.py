@@ -6,7 +6,9 @@ from transformers import pipeline
 # ==========================
 # Page Configuration
 # ==========================
-
+@st.cache_data
+def load_data(uploaded_file):
+    return pd.read_csv(uploaded_file)
 st.set_page_config(
     page_title="Women's Fashion Trends Dashboard",
     page_icon="👗",
@@ -43,7 +45,7 @@ if uploaded_file is not None:
 
     try:
 
-        df = load_data(uploaded_file)
+        df =pd.read_csv(uploaded_file)
 
         st.success("✅ File Uploaded Successfully")
 
